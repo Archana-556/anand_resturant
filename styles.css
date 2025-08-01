@@ -249,6 +249,7 @@ body {
 }
 .slick-slidder{
   margin: 30px 20px;
+ 
 }
 .offer-card {
   background: rgba(255, 255, 255, 0.95);
@@ -260,6 +261,10 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
+  min-height: 340px; /* Adjust as needed for your content */
+   border: 20x solid yellow;
+
+
 }
 
 .offer-card::before {
@@ -269,10 +274,12 @@ body {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transform: rotate(45deg);
+  background: linear-gradient(45deg, transparent, rgba(143, 6, 6, 0.523), transparent);
+  transform: rotate(30deg);
   transition: all 0.6s ease;
-  opacity: 0;
+  border: 2px solid black;
+  border-radius: 20px;
+  /* opacity: 0; */
 }
 
 .offer-card:hover::before {
@@ -282,6 +289,7 @@ body {
 .offer-card:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  /* height: 100%; */
 }
 
 .offer-badge {
@@ -501,6 +509,9 @@ body {
 
 .gallery-card img {
   transition: all 0.4s ease;
+  height: 300px;
+  width: 400px;
+  object-fit: cover;
 }
 
 .gallery-card:hover img {
