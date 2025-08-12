@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="menuContainer"></div>
+
+<script>
+async function fetchMenu() {
+  const res = await fetch('http://localhost:5000/api/menuItem/all');
+  const data = await res.json();
+  const container = document.getElementById('menuContainer');
+  container.innerHTML = data.map(item => `
+    <div class="card">
+      <img src="${item.image}" alt="${item.name}" />
+      <h3>${item.name}</h3>
+      <p>${item.description}</p>
+      <strong>₹${item.price}</strong>
+    </div>
+  `).join('');
+}
+
+window.onload = fetchMenu;
+</script>
+
+</body>
+</html>
