@@ -59,14 +59,14 @@
             <div class="row mb-5">
                 <div class="col-12">
                     <div id="filterButtons" class="text-center my-3">
-                        <button class="btn mx-1" onclick="filterItems('All')">All</button>
-                        <button class="btn mx-1" onclick="filterItems('Veg')">Veg</button>
-                        <button class="btn mx-1" onclick="filterItems('Non-Veg')">Non-Veg</button>
-                        <button class="btn mx-1" onclick="filterItems('Indian')">Indian</button>
-                        <button class="btn mx-1" onclick="filterItems('Chinese')">Chinese</button>
-                        <button class="btn mx-1" onclick="filterItems('Sweets')">Sweets</button>
-                        <button class="btn mx-1" onclick="filterItems('drinks')">Drinks</button>
-                        <button class="btn mx-1" onclick="filterItems('Cakes')">Cakes</button>
+                        <button class="btn mx-1">All</button>
+                        <button class="btn mx-1">Veg</button>
+                        <button class="btn mx-1">Non-Veg</button>
+                        <button class="btn mx-1">Indian</button>
+                        <button class="btn mx-1">Chinese</button>
+                        <button class="btn mx-1">Sweets</button>
+                        <button class="btn mx-1">Drinks</button>
+                        <button class="btn mx-1">Cakes</button>
                     </div>
                 </div>
             </div>
@@ -75,9 +75,10 @@
             <div id="menuContainer" class="row g-4 p-4 justify-content-center"></div>
 
             <!-- Modal box jo normally hidden hota hai -->
-            <div id="detailModal" style="display:none; position:fixed; top:10%; left:20%; width:50%; background:white; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px gray; z-index:999;">
-                <span onclick="closeModal()" style="float:right; font-size:20px; cursor:pointer;">&times;</span>
-                <div id="modalContent"></div>
+            <div id="detailModal" style="display:none; position:fixed; top:10%; left:20%; width:30%; text-align:center; background:white; margin-top: 5px; padding:2px 30px; border:1px solid #d4d1d1; box-shadow:0 0 10px gray; z-index:999;">
+                <button class="btn btn-outline-dark float-end m-2" onclick="closeModal()">❌</button>
+                <div style="background:#fff; margin:5% auto; padding:0px; width:auto;" id="modalContent"></div>
+                <button class="btn btn-lg bg-danger text-light rounded mb-5" onclick="closeModal()">Add to cart</button>
             </div>
         </div>
     </section>

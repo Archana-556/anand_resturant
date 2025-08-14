@@ -334,15 +334,18 @@ document.addEventListener("click", (e) => {
 
 let allMenuItems = [];
 
-// 1. Fetch all data from backend
-fetch('/api/menuItem/all')
-  .then(res => res.json())
-  .then(data => {
-    allMenuItems = data;
-    displayItems(allMenuItems); // by default show all
-  });
+// 1. Fetch all menu items from backend
+function fetchMenu() {
+  fetch('/api/menuItem/all')
+    .then(res => res.json())
+    .then(data => {
+      allMenuItems = data;
+      displayItems(allMenuItems); // default show all
+    })
+    .catch(err => console.error("Error fetching menu:", err));
+}
 
-// 2. Display function
+// 2. Display items on the page
 function displayItems(items) {
   const container = document.getElementById('menuContainer');
   container.innerHTML = items.map((item, index) => `
@@ -351,62 +354,110 @@ function displayItems(items) {
         <img src="${item.image}" class="card-img-top" alt="${item.name}" style="height:150px; object-fit:cover;">
         <div class="card-body">
           <h5 class="card-title mb-0">${item.name}</h5>
-          <p class="card-text small mb-0">${item.description}</p>
+          
           <p class="text-muted d-inline mb-0">₹<strike>${item.price}</strike></p>
           <p class="fw-bold text-primary d-inline mb-0">₹${item.offerprice}</p>
-          <p class="text-danger mb-0">(up to ${item.offer}% off)</p>
-          <p class="badge mb-0 bg-${item.category === 'Veg' ? 'success' : 'danger'}">${item.category}</p>
-          <p class="text-muted d-inline small">${item.cuisine}</p></br>
-          <button class="border border-danger rounded border-2 text-danger px-4" data-index="${index}">show Detail</button>
+          <p class="text-danger d-inline mb-0">(up to ${item.offer}% off)</p>
+          <p class="badge mb-0 bg-${item.category === 'Veg' ? 'success' : 'danger'}">${item.category}</p></br>
+
         </div>
       </div>
     </div>
   `).join('');
 
-  // Add event listeners to cards and buttons
-  const cards = container.querySelectorAll('.card');
-  cards.forEach(card => {
+  // Card click for details
+  container.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', () => {
       const idx = card.getAttribute('data-index');
       showDetails(allMenuItems[idx]);
     });
   });
 
-  const buttons = container.querySelectorAll('button[data-index]');
-  buttons.forEach(button => {
+  // Stop propagation for detail button
+  container.querySelectorAll('button[data-index]').forEach(button => {
     button.addEventListener('click', (e) => {
-      e.stopPropagation(); // Prevent card click event
+      e.stopPropagation();
       const idx = button.getAttribute('data-index');
       showDetails(allMenuItems[idx]);
     });
   });
 }
 
+// 3. Filter items + highlight active button
+function filterItems(filter, clickedButton) {
+  // Remove active from all buttons
+  document.querySelectorAll('#filterButtons button').forEach(btn => {
+    btn.classList.remove('active');
+  });
 
+  // Add active to clicked button
+  clickedButton.classList.add('active');
+
+  // Filter logic
+  if (filter === 'All') {
+    displayItems(allMenuItems);
+  } else {
+    const filtered = allMenuItems.filter(item =>
+      item.category === filter || item.cuisine === filter
+    );
+    displayItems(filtered);
+  }
+}
+
+
+// 4. Show details in modal
 function showDetails(item) {
   const modal = document.getElementById('detailModal');
   const content = document.getElementById('modalContent');
 
-  // Modal ke andar HTML inject karo:
   content.innerHTML = `
-    <img class="img img-fluid" src="${item.image}" style="height=100px; width=200px />
-    <h2>${item.name}</h2>
-    <p>${item.description}</p>
-    <p>Category: ${item.category}</p>
-    <p>Cuisine: ${item.cuisine}</p>
-    <strong>Price: ₹${item.price}</strong>
+ <img src="${item.image}" class="card-img-top" alt="${item.name}" style="height:150px; object-fit:cover;">
+    <h2 class="text-danger ">${item.name}</h2>
+    <p class='my-0'>${item.description}</p>
+     <p class="text-muted d-inline my-0">₹<strike>${item.price}</strike></p>
+          <p class="fw-bold text-primary d-inline mb-0">₹${item.offerprice}</p>
+     <p class="text-danger d-inline mb-0">(up to ${item.offer}% off)</p></br>
+          <p class="text-muted d-inline mb-0">Available in ${item.quantity} quantity</p><br>
+          <p class="badge mb-0 bg-${item.category === 'Veg' ? 'success' : 'danger'}">${item.category}</p>
+          <p class="text-muted d-inline small">${item.cuisine}</p>
+    
   `;
 
-  modal.style.display = 'block'; // Modal dikhado
+  modal.style.display = 'block';
 }
+
+// 5. Close modal
 function closeModal() {
   document.getElementById('detailModal').style.display = 'none';
 }
-window.onload = fetchMenu;
+
+// 6. Setup filter button events
+function setupFilterButtons() {
+  const buttons = document.querySelectorAll('#filterButtons button');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterItems(btn.textContent.trim(), btn);
+    });
+  });
+}
+
+// 7. On page load
+window.onload = function () {
+  fetchMenu();
+  setupFilterButtons();
+};
+
 
 
 // 3. Filter function
-function filterItems(filter) {
+function filterItems(filter, clickedButton) {
+    // 1️⃣ Pehle sab buttons se active class hatao
+  const buttons = document.querySelectorAll('.menu button');
+  buttons.forEach(btn => btn.classList.remove('active'));
+
+  // 2️⃣ Jis button pe click hua, uspe active class lagao
+  clickedButton.classList.add('active');
+
   if (filter === 'All') {
     displayItems(allMenuItems);
   } else {

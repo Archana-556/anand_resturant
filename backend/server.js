@@ -10,9 +10,9 @@ const menuRoutes = require('./routes/menuRoutes');
 app.use('/api/menuItem', menuRoutes);
 
 
-app.use(express.static(path.join(__dirname , '../public')));
+app.use(express.static(path.join(__dirname , 'public')));
 app.get('/', (req, res)=>{
-  res.sendFile(__dirname, '../public/menuForm.html');
+  res.sendFile(__dirname, 'public', 'menuForm.html');
 });
 
 mongoose.connect(process.env.MONGO_URI)

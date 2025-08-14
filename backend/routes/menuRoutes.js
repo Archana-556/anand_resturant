@@ -12,6 +12,7 @@ router.post('/menuItem', async (req, res) => {
   const newItem = new MenuItem(req.body);
   await newItem.save();
   res.status(201).json({ success: true, item: newItem });
+  
   } catch (err) {
     res.status(400).json({ success: false, message: err.message });
   }
