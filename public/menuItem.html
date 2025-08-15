@@ -10,7 +10,7 @@
 
 <script>
 async function fetchMenu() {
-  const res = await fetch('http://localhost:5000/api/menuItem/all');
+  const res = await fetch('http://xsds.vercel.app/api/menuItem/all');
   const data = await res.json();
   const container = document.getElementById('menuContainer');
   container.innerHTML = data.map(item => `

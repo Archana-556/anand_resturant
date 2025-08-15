@@ -140,7 +140,7 @@ document.getElementById('menuForm').addEventListener('submit', async (e) => {
     offer: form.offer.value
   };
   
-  const res = await fetch('http://localhost:5000/api/menuItem/menuItem', {
+  const res = await fetch('http://xsds.vercel.app/api/menuItem/menuItem', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(data)
