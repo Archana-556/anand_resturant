@@ -10,7 +10,7 @@ app.use(express.json());
 
 // API Routes
 const menuRoutes = require('./routes/menuRoutes');
-app.use('/api/menuItem', menuRoutes);
+app.use('/api', menuRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
