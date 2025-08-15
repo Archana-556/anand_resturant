@@ -7,7 +7,7 @@ const MenuItem = require('../models/menuitem');
 
 // Add item
 // POST /api/menuItem
-router.post('/menuItem', async (req, res) => {
+router.post('/', async (req, res) => {
   try{
   const newItem = new MenuItem(req.body);
   await newItem.save();
