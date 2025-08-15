@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 
 
 // Get items
-router.get('/all', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const items = await MenuItem.find();
     res.json(items);

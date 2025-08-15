@@ -335,15 +335,21 @@ document.addEventListener("click", (e) => {
 let allMenuItems = [];
 
 // 1. Fetch all menu items from backend
+
+const API_BASE_URL = window.location.hostname.includes("localhost")
+  ? "http://localhost:5000" // Local backend
+  : "https://tumhara-backend-url"; // Deployed backend ka URL
+
 function fetchMenu() {
-  fetch('/api/menuItem/all')
+  fetch(`${API_BASE_URL}/api/menuItem/all`)
     .then(res => res.json())
     .then(data => {
       allMenuItems = data;
-      displayItems(allMenuItems); // default show all
+      displayItems(allMenuItems);
     })
     .catch(err => console.error("Error fetching menu:", err));
 }
+
 
 // 2. Display items on the page
 function displayItems(items) {
