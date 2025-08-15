@@ -12,24 +12,19 @@ app.use(express.json());
 const menuRoutes = require('./routes/menuRoutes');
 app.use('/api/menuItem', menuRoutes);
 
-// Serve static files from ../public
-app.use(express.static(path.join(__dirname, '../public')));
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Default route (homepage)
+// Serve homepage
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected!"))
+  .then(() => {
+    console.log("MongoDB connected!");
+    app.listen(process.env.PORT, () =>
+      console.log(`Server running on http://localhost:${process.env.PORT}`)
+    );
+  })
   .catch(err => console.log(err));
-
-// Export app for Vercel
-module.exports = app;
-
-// If running locally, start server
-if (require.main === module) {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
-}
