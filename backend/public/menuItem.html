@@ -10,7 +10,7 @@
 
 <script>
 async function fetchMenu() {
-  const res = await fetch('/api/menuItem/all');
+  const res = await fetch('/api/menuItem/menuitem');
   const data = await res.json();
   const container = document.getElementById('menuContainer');
   container.innerHTML = data.map(item => `
